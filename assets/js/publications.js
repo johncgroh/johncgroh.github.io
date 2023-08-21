@@ -1,11 +1,14 @@
 function getRecentPubs()
 {
-    //
+    // OK, so the problem here is that some aren't on the arxiv and there's no "arxiv_eprints" in the metadata
+    // use DOI instead since that'll always exist
     $.get('https://inspirehep.net/api/literature?sort=mostrecent&size=10&q=find a John C Groh', function(data) {
         for (jrecord = 0; jrecord < data.hits.hits.length; jrecord++) {
             var title = data.hits.hits[jrecord].metadata.titles[0].title;
-            var arxiv_text = 'arxiv:' + data.hits.hits[jrecord].metadata.arxiv_eprints[0].value;
-            var arxiv_link = 'https://arxiv.org/abs/' + data.hits.hits[jrecord].metadata.arxiv_eprints[0].value;
+	    var doi_text = 'doi:' + data.hits.hits[jrecord].metadata.dois[0].value.slice(1,-1);
+	    var doi_link = 'https://doi.org/' + data.hits.hits[jrecord].metadata.dois[0].value.slice(1,-1);
+            //var arxiv_text = 'arxiv:' + data.hits.hits[jrecord].metadata.arxiv_eprints[0].value;
+            //var arxiv_link = 'https://arxiv.org/abs/' + data.hits.hits[jrecord].metadata.arxiv_eprints[0].value;
             if (data.hits.hits[jrecord].metadata.hasOwnProperty('publication_info')) {
                 console.log(data.hits.hits[jrecord].metadata.publication_info);
                 var journal_name = data.hits.hits[jrecord].metadata.publication_info[0].journal_title;
@@ -33,7 +36,7 @@ function getRecentPubs()
             else {
                 var journal_text = '';
             }
-            $('#publications').append('<li><i>' + title + '</i>, <a href=' + arxiv_link + '>' + arxiv_text + '</a> ' + journal_text + '</li>')
+            $('#publications').append('<li><i>' + title + '</i>, <a href=' + doi_link + '>' + doi_text + '</a> ' + journal_text + '</li>')
         }
         
         
