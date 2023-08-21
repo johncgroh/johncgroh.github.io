@@ -42,50 +42,27 @@
 	  </h2>
 	</header>
 	<p>
-	  Coming soon!
+	  Modern detectors for millimeter-wave cosmological observations have the blessing and the curse of being "background limited," meaning that the noise induced by the sensors and electronics is sub-dominant to the quantum statistics of the photons they are detecting.  In this context, there is no such thing as a more sensitive detector - only by increasing the <i>number</i> of simultaneously observing detectors can an observatory become more sensitive.  The gold standard for millimeter-wave sensors is the transition-edge sensor (TES) bolometer, which is highly scalable: modern photolithography techniques are able to produce >1,000 devices on a single 150 mm silicon wafer, as shown below on the left.
+	</p>
+	<p><img src="./tes_wafer.jpg", alt="", style="height:200px;"><br>Photo: Chris Raum</p>
+	<p>
+	  This scalability has led to an explosive growth in the number of sensors used to simultaneously observe the CMB, as shown below.  But while TES bolometers are very scalable, the situation with their associated readout circuitry components is not as favorable.  So that these readout components don't become a bottleneck for telescope sensitivity, multiplexing techniques must be employed to reduce the total number of electronics components.  As can be seen below, this has been a trend for some time; multiplexed readout is a major driver of the achievable detector count in modern millimeter-wave observatories.
+	</p>
+	<p><img src="./mux_moores_law.png", alt="", style="height:250px;"></p>
+	<p>
+	  What does multiplexing look like in the context of TES bolometer readout?  The crucial issue at hand is that these TES detectors need to be exremely thermally isolated from their environment in order to cool them to their operating temperature of ~0.1 Kelvin, but they also must be electrically connected to circuitry which interacts with conventional electronics at ~300 Kelvin.  Modern telescopes are now able to incorporate ~10,000 sensors inside a single cryovessel; if all these detectors were biased and read out independently, they would require 60,000 wires, 60,000 SQUID amplifiers, 60,000 ADCs, 60,000 feedback circuits, etc.  That number of cables and components would be very difficult to manage, cool, and fabricate at scale.  The solution is to incorporate a cryogenic channelization scheme that drastically cuts down on the number of independent readout units required, as shown schematically below.
 	</p>
 	<p><img src="./mux_concept.png", alt="", style="height:300px;"></p>
 	<p>
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
-	  asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf	  
-	</p>
-	<p><img src="./mux_moores_law.png", alt="", style="height:300px;"></p>
-	<p>
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;
-	  jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;	  
+	  There are 3 commonly implemented ways of implementing such a channelization scheme: time division multiplexing, <a href="../dfmux/dfmux.html">digital frequency-division multiplexing</a>, and microwave SQUID multiplexing (often shortened to just &mu;mux).  Of those, &mu;mux has by far the highest channel handling capacity owing to the large amount of bandwidth available for readout (GHz as opposed to MHz).  Current systems are capable of reading out ~10<sup>3</sup> sensors with a single readout line.  The system which I have helped implement, produce, and test for <a href="../so/so.html">the Simons Observatory</a> and <a href="../alicpt/alicpt.html">AliCPT</a> is based on a &mu;mux scheme and is depicted schematically below.  Individual TES bolometers are coupled to unique microwave resonators via rf-SQUIDs.  This makes the detector signal modulate the resonance frequency of each resonator.  A software-defined radio system interrogates the resonators w/ individual microwave probe tones in a transmission measurement to track them over time.  Two other "DC" lines are needed to bias the TESs and provide a linearization signal to the SQUIDs.
 	</p>
 	<p><img src="./umux_schematic.png", alt="", style="height:300px;"></p>
 	<p>
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer
-	  qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer qwer	  
+	  The resonators and SQUIDs are constructed of thin film superconductors using modern photolithography techniques.  Shown on the left is a chip containing the resonators+SQUIDs, and on the right is an assembly that includes all the TESs (bottom wafer) with only a small number of microwave connections (right) and "DC" bias+linearization connections (left).
 	</p>
 	<p><img src="./umux_chip.jpg", alt="", style="height:300px;"><img src="./umux_assembly.jpg", alt="", style="height:300px;"></p>
 	<p>
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop	  
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop
-	  uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop uiop	  
+	  During my postdoctoral work at NIST, I developed a more advanced microwave SQUID multiplexer which increases the number of channels that can be read out from 910 to 1,820 - thereby halving the required number of cables and cryogenic amplifiers.
 	</p>
 	
       </section>
